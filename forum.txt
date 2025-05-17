@@ -1,14 +1,31 @@
 TOPIC|SP discussion
 POST|Sakshi|Complete project ASAP!!!
 POST|Batman|You guys done with Sp?
+POST|LOGIN|Rupali
 TOPIC|Sodexo
 POST|Rupali|Tabby is a bitch!!
 TOPIC|Internships
 POST|Batman|Just rejects
 POST|Anonymous|1.
-POST|LOGIN|Blahh|3.
+POST|LOGIN|Blahh
+POST|LOGIN|Rupali
+POST|LOGIN|Rupali
+POST|LOGIN|Rupali
+POST|LOGIN|Rupali
+POST|LOGIN|Rupali
+POST|Rupali|helloo
+POST|Rupali|12
 TOPIC|3
 TOPIC|1.
 TOPIC|2.
+POST|Rupali|whats
 TOPIC|2
+POST|Rupali|Full Time Application
 TOPIC|2
+TOPIC|Summer Plan
+POST|Rupali|going to NJ
+TOPIC|2.
+TOPIC|Fall 2025 Plans
+POST|Rupali|make plan for NJ, VISIT TEMPLE
+TOPIC|XYZ
+POST|Sakshi|this is xyzzz

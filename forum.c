@@ -124,4 +124,3 @@ void load_forum(const char *filename) {
 
     fclose(fp);
 }
-

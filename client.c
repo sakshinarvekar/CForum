@@ -29,17 +29,23 @@ int main() {
     printf("✅ Connected to server.\n");
 
     char name[50], buffer[BUFFER_SIZE], input[BUFFER_SIZE];
-    printf("Enter your name: ");
-    fgets(name, sizeof(name), stdin);
-    name[strcspn(name, "\n")] = '\0';
+    int bytes;
 
-    // Send name to server
-    char login[100];
-    snprintf(login, sizeof(login), "LOGIN|%s\n", name);
-    send(sock, login, strlen(login), 0);
+    // Get prompt from server and send username
+    bytes = recv(sock, buffer, sizeof(buffer) - 1, 0);
+    if (bytes <= 0) {
+        printf("❌ Server disconnected.\n");
+        return 1;
+    }
+    buffer[bytes] = '\0';
+    printf("%s", buffer);
+
+    fgets(name, sizeof(name), stdin);
+    name[strcspn(name, "\n")] = '\0';  // remove newline
+    send(sock, name, strlen(name), 0); // send raw name only
 
     while (1) {
-        int bytes = recv(sock, buffer, sizeof(buffer) - 1, 0);
+        bytes = recv(sock, buffer, sizeof(buffer) - 1, 0);
         if (bytes <= 0) {
             printf("❌ Server disconnected.\n");
             break;

@@ -1,6 +1,4 @@
-// === server.c ===
-// Replaces old server.c with full multi-user logic using forum.c/h with styled menu
-
+// server.c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -44,7 +42,7 @@ void *handle_client(void *arg) {
     char buffer[BUFFER_SIZE];
     char response[BUFFER_SIZE];
     int bytes_read;
-    int state = 0; // 0: menu, 1: new topic, 2: post topic number, 3: post message
+    int state = 0;
     char temp_topic[100];
     char username[50] = "Anonymous";
 
@@ -62,12 +60,6 @@ void *handle_client(void *arg) {
         response[0] = '\0';
 
         if (state == 0) {
-            for (int i = 0; buffer[i]; i++) {
-                if (buffer[i] == '.' || buffer[i] == ' ') {
-                    buffer[i] = '\0';
-                    break;
-                }
-            }
             int choice = atoi(buffer);
             if (choice == 1) {
                 Topic *t = forum_head;
@@ -82,7 +74,8 @@ void *handle_client(void *arg) {
                         Post *p = t->posts;
                         if (!p) strcat(response, "   ┗ (No posts yet)\n");
                         while (p) {
-                            snprintf(line, sizeof(line), "   ┗ 👤 %s: %s\n", p->author, p->content);
+                            snprintf(line, sizeof(line), "   ┗ 👤 %.50s: %.400s\n", p->author, p->content);
+                            line[sizeof(line) - 1] = '\0';
                             strcat(response, line);
                             p = p->next;
                         }
@@ -91,7 +84,7 @@ void *handle_client(void *arg) {
                 }
                 strcat(response, "(Press Enter to return to main menu)\n");
                 send(sock, response, strlen(response), 0);
-                recv(sock, buffer, sizeof(buffer), 0); // wait for enter
+                recv(sock, buffer, sizeof(buffer), 0); // wait for Enter
             } else if (choice == 2) {
                 send(sock, "Enter topic title: ", 21, 0);
                 state = 1;
@@ -127,14 +120,18 @@ void *handle_client(void *arg) {
         } else if (state == 1) {
             add_topic(create_topic(buffer));
             save_forum("forum.txt");
-            snprintf(response, sizeof(response), "\033[1;32m✅ Topic '%s' created successfully!\033[0m\n", buffer);
+            snprintf(response, sizeof(response), "\033[1;32m✅ Topic '%.100s' created successfully!\033[0m\n", buffer);
             state = 0;
             send(sock, response, strlen(response), 0);
         } else if (state == 2) {
             int selected = atoi(buffer);
-            Topic *t = forum_head;
-            int i = 1;
-            while (t && i++ < selected) t = t->next;
+Topic *t = forum_head;
+int i = 1;
+while (t && i < selected) {
+    t = t->next;
+    i++;
+}
+
             if (!t) {
                 snprintf(response, sizeof(response), "❌ \033[1;31mInvalid topic number.\033[0m\n");
                 state = 0;

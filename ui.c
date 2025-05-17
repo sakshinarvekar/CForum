@@ -17,7 +17,7 @@ void show_menu() {
 
     while (1) {
         printf("\n╔══════════════════════════════════════╗\n");
-        printf("║         🧩 " CYAN "Welcome to CForum" RESET "         ║\n");
+        printf("║         🧩 " CYAN "Welcome to CForum" RESET "        ║\n");
         printf("║    A Terminal-Based Forum System    ║\n");
         printf("╚══════════════════════════════════════╝\n");
         printf("👤 Logged in as: %s\n", current_user);
