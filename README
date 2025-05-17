@@ -1,0 +1,24 @@
+# 🧩 CForum – Terminal-Based Multi-User Forum
+
+**Author:** Sakshi Narvekar  
+**B-number:** [Your B-number here]  
+**Course:** [Course Name / ID]
+
+---
+
+## ✅ Overview
+
+CForum is a terminal-based forum system that allows multiple users to:
+- View existing topics
+- Create new discussion threads
+- Reply to topics with messages
+
+All data is **persisted** in `forum.txt` and restored on each run.
+
+---
+
+## 🛠️ How to Build & Run
+
+```bash
+make        # Compiles the app
+./cforum    # Starts the forum system
