@@ -1,24 +1,84 @@
-# 🧩 CForum – Terminal-Based Multi-User Forum
+🧩 CForum – A Multi-User Terminal Forum System
 
-**Author:** Sakshi Narvekar  
-**B-number:** [Your B-number here]  
-**Course:** [Course Name / ID]
+CForum is a terminal-based multi-user discussion forum written in C using client-server architecture. It allows users to view, create, and reply to forum topics in real-time through a shared TCP-connected environment. All data is persistently stored using file I/O.
 
----
+📦 Features
+- View existing forum topics and their messages
+- Create new discussion topics
+- Post messages to any topic
+- Multi-client support using pthreads
+- Persistent storage via forum.txt
+- Clean, color-coded terminal UI
 
-## ✅ Overview
+📁 Project Structure
+CForum/
+├── client.c         # Client-side code (connects to server)
+├── server.c         # Server-side code (handles multiple clients)
+├── forum.c          # Forum data logic (topic + post handling)
+├── forum.h          # Forum data structure definitions
+├── forum.txt        # Forum storage (created at runtime)
+├── Makefile         # (Optional) Build automation
+└── README.txt       # Project documentation
 
-CForum is a terminal-based forum system that allows multiple users to:
-- View existing topics
-- Create new discussion threads
-- Reply to topics with messages
+⚙️ Step-by-Step Guide to Run the Program
 
-All data is **persisted** in `forum.txt` and restored on each run.
+1️⃣ Open Your Terminal
+Navigate to the project directory:
+$ cd /path/to/CForum
 
----
+2️⃣ Compile the Code
 
-## 🛠️ How to Build & Run
+Option A: If you have a Makefile
+first clean 
+$ make clean
+$ make
 
-```bash
-make        # Compiles the app
-./cforum    # Starts the forum system
+Option B: Manually compile
+$ gcc -Wall -g -c -o forum.o forum.c
+$ gcc -Wall -g -c -o client.o client.c
+$ gcc -Wall -g -o client client.o forum.o
+$ gcc -Wall -g -c -o server.o server.c
+$ gcc -Wall -g -o server server.o forum.o -lpthread
+
+3️⃣ Start the Server
+In one terminal window:
+$ ./server
+
+Expected output:
+🖥️  Server listening on port 9000...
+🔗 New client connected!
+
+4️⃣ Start the Client(s)
+In another terminal:
+$ ./client
+
+Expected:
+✅ Connected to server.
+Enter your name: Rupali
+
+5️⃣ Interact with the Forum
+👤 Logged in as: Rupali
+
+Main Menu:
+1️⃣  View Topics
+2️⃣  Create a New Topic
+3️⃣  Post a Message to a Topic
+4️⃣  Exit and Save
+
+- Enter 1 → View forum topics and posts
+- Enter 2 → Create a new topic
+- Enter 3 → Post a message to a selected topic
+- Enter 4 → Exit (and save)
+(Press Enter after viewing topics to return to the menu)
+
+🔁 Run Multiple Clients
+Open multiple terminal windows and run ./client to simulate concurrent users.
+
+💾 Forum Data Storage
+- Data is stored in forum.txt
+- To reset the forum:
+$ rm forum.txt
+
+🧹 Clean Build (optional)
+If using make:
+$ make clean
